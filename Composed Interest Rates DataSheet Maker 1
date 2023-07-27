@@ -1,0 +1,77 @@
+/*
+
+Author: Chris Rextus
+
+Date: 07/27/2023
+
+
+Objetive: Input a determined interest rate for a given application, the invested amount and the time interval for such application; Then, compute the revenue for such
+parameters using composed interest rates not just for the given determined interest rate, but for the next four values of it (incrementing in 1% each) on each year;
+Finally, it displays all of them in a datasheet for easy comparing between values and revenues. 
+
+WARNING: The range for the incrementing interest rate in the final display is not able to be changed. Changing it's MACRO at the MACRO defining will break the code.
+WARNING: All inputted interest rates are supposed to be positive, i.e, gains. Inputting losses, negative rates will break the code aswell.
+WARNING: All variables were set as doubles for avoiding type problems or arithmetic overflow.
+
+*/
+
+
+
+// MACRO defining, the range for the interest rate incrementation
+#define INTEREST_RATES_RANGE 5
+
+// libraries used
+#include <stdio.h>
+#include <math.h> 
+
+// The main function. No subroutines were necessary.
+int main (void)
+{
+    // input for the given interest rate, in %. No negative rates are allowed, all of them are given to be gains, never losses.
+    printf("\nType your interest rate in %% : ");
+    double interest_rate;
+    scanf("%lf", &interest_rate);
+
+    // input for the time interval of analysis, in years.
+    printf("\nType now your time interval in years: ");
+    double year_interval;
+    scanf("%lf", &year_interval);
+
+    // input for the initial application in dollars
+    printf("\nType now the initial amount in cash: ");
+    double initial_cash;
+    scanf("%lf", &initial_cash);
+
+    // statement and initialization for the used array for the value storage.
+    double values_for_cash_revenues[INTEREST_RATES_RANGE] = {0}; // all of them were initialized as zero on the "{0}"; The array has size of the MACRO range
+
+    // composed iterations for computing and storing each value of the composed interest rates, for each year and each incrementation in the array
+    for (int j = 0; j < year_interval; j++) // for loop for that iterates each year of the time range inputted previously
+    {
+          for ( int i = 0; i < INTEREST_RATES_RANGE; i++) // for loop that iterates each incrementation of interest rate that will be used to compute revenues                 
+        {
+            values_for_cash_revenues[i] = initial_cash * ( (pow((   (double)(1) + ( (  interest_rate + (double)(i) ) / 100 )   ), j + 1)) ); 
+            /*
+              This line stores inside the array of revenues, in each index, the result of the following formula:
+                  revenue of index i = initial_application_cash * ( (   1 + ( interest_rate + incrementation ) ^ year ) / 100   )
+              
+              It considers simultaneously each interest rate, incremented or not; Each year using the pow function on composed rates;
+
+            */
+        }
+
+        printf("\n\nYear %d:\t\t", j + 1 ); // Printing of each year in the datasheet
+
+      // for loop that creates each column of incremented interest rate and display each revenue value of the previously stored array
+        for (int i = 0; i < INTEREST_RATES_RANGE; i++)
+        {
+          printf("Rate at %.2lf%%: %.2lf\t\t", interest_rate + (double)i, values_for_cash_revenues[i] );
+        }
+        
+    }
+
+    // terminates the program 
+    printf("\n\n\nEnd of Program User, Goodbye!\n\n\n");
+
+    return 0;
+}
