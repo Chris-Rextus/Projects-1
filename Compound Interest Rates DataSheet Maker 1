@@ -6,7 +6,7 @@ Date: 07/27/2023
 
 
 Objetive: Input a determined interest rate for a given application, the invested amount and the time interval for such application; Then, compute the revenue for such
-parameters using composed interest rates not just for the given determined interest rate, but for the next four values of it (incrementing in 1% each) on each year;
+parameters using compound interest rates not just for the given determined interest rate, but for the next four values of it (incrementing in 1% each) on each year;
 Finally, it displays all of them in a datasheet for easy comparing between values and revenues. 
 
 WARNING: The range for the incrementing interest rate in the final display is not able to be changed. Changing it's MACRO at the MACRO defining will break the code.
@@ -45,7 +45,7 @@ int main (void)
     // statement and initialization for the used array for the value storage.
     double values_for_cash_revenues[INTEREST_RATES_RANGE] = {0}; // all of them were initialized as zero on the "{0}"; The array has size of the MACRO range
 
-    // composed iterations for computing and storing each value of the composed interest rates, for each year and each incrementation in the array
+    // compound iterations for computing and storing each value of the compound interest rates, for each year and each incrementation in the array
     for (int j = 0; j < year_interval; j++) // for loop for that iterates each year of the time range inputted previously
     {
           for ( int i = 0; i < INTEREST_RATES_RANGE; i++) // for loop that iterates each incrementation of interest rate that will be used to compute revenues                 
